@@ -15,6 +15,9 @@ class GameScene: SKScene {
         // Set the background color of the app
         self.backgroundColor = SKColor.black;
         
+        // -----------------------------
+        // 1. Add a background to the game
+        // -----------------------------
         // Add a background image
         let bg = SKSpriteNode(imageNamed:"background1")
         // Set position of background to middle of screen
@@ -25,6 +28,14 @@ class GameScene: SKScene {
 
         // Finally, add the background to the Scene Graph
         addChild(bg)
+        
+        
+        // -----------------------------
+        // 2. Add a zombie to the game
+        // -----------------------------
+        let zombie = SKSpriteNode(imageNamed: "zombie1")
+        zombie.position = CGPoint(x:400, y:400)
+        addChild(zombie)
     }
     
 }
