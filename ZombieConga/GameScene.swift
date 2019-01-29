@@ -11,12 +11,15 @@ import GameplayKit
 
 class GameScene: SKScene {
    
+    // Make zombie global, so other functions can access it
+    let zombie:SKSpriteNode = SKSpriteNode(imageNamed:"zombie1")
+    
     override func didMove(to view: SKView) {
         // Set the background color of the app
         self.backgroundColor = SKColor.black;
         
         // -----------------------------
-        // 1. Add a background to the game
+        // Add a background to the game
         // -----------------------------
         // Add a background image
         let bg = SKSpriteNode(imageNamed:"background1")
@@ -31,11 +34,24 @@ class GameScene: SKScene {
         
         
         // -----------------------------
-        // 2. Add a zombie to the game
+        // Add a zombie to the game
         // -----------------------------
-        let zombie = SKSpriteNode(imageNamed: "zombie1")
         zombie.position = CGPoint(x:400, y:400)
         addChild(zombie)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        // -----------------------------
+        // Move the zombie to the right
+        // -----------------------------
+      
+        // Remember:  The game loop is:
+        //      - updatePositions
+        //      - drawPositions
+        //      - setFPS
+        // In IOS, the update() function == updatePositions() function from Android game template
+        let zombieX = self.zombie.position.x + 10;
+        self.zombie.position = CGPoint(x: zombieX, y: self.zombie.position.y)
     }
     
 }
