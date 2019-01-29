@@ -14,6 +14,10 @@ class GameScene: SKScene {
     // Make zombie global, so other functions can access it
     let zombie:SKSpriteNode = SKSpriteNode(imageNamed:"zombie1")
     
+    // Movement variables
+    var zombieMovingLeft:Bool = false;
+    var zombieMovingRight:Bool = true;
+    
     override func didMove(to view: SKView) {
         // Set the background color of the app
         self.backgroundColor = SKColor.black;
@@ -41,16 +45,44 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        // -----------------------------
-        // Move the zombie to the right
-        // -----------------------------
-      
         // Remember:  The game loop is:
         //      - updatePositions
         //      - drawPositions
         //      - setFPS
         // In IOS, the update() function == updatePositions() function from Android game template
-        let zombieX = self.zombie.position.x + 10;
+
+        
+        // --------------------------
+        // Make zombie bounce off left and right walls
+        // --------------------------
+        // get x-position of right side of screen
+        let screenRightSide = size.width
+        
+        // get current x-position of zombie
+        var zombieX = self.zombie.position.x
+        
+        if (self.zombieMovingLeft == true) {
+            zombieX = self.zombie.position.x - 10;
+            
+            if (zombieX <= 0) {
+                // bounce off left wall
+                self.zombieMovingRight = true;
+                self.zombieMovingLeft = false;
+                
+            }
+        }
+        
+        if (self.zombieMovingRight == true) {
+            zombieX = self.zombie.position.x + 10;
+            
+            if (zombieX >= screenRightSide) {
+                // bounce off right wall
+                self.zombieMovingLeft = true
+                self.zombieMovingRight = false
+            }
+        }
+        
+        
         self.zombie.position = CGPoint(x: zombieX, y: self.zombie.position.y)
     }
     
