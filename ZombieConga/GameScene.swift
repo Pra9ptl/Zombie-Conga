@@ -86,4 +86,19 @@ class GameScene: SKScene {
         self.zombie.position = CGPoint(x: zombieX, y: self.zombie.position.y)
     }
     
+    
+    // MARK: Detect when user taps the screen
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // get the first "tap" on the screen
+        let touch = touches.first
+        
+        if (touch == nil) {
+            // if for some reason the "tap" return as null, then exit
+            return
+        }
+        
+        let touchLocation = touch!.location(in: self)
+        print("User tapped screen at: \(touchLocation.x.rounded()),\(touchLocation.y.rounded())")
+    }
+    
 }
