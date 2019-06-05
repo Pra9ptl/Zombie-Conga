@@ -82,8 +82,8 @@
 				05B760432200B2E40014A1B9 /* AppDelegate.swift */,
 				05B760492200B2E40014A1B9 /* GameScene.swift */,
 				05B7604B2200B2E40014A1B9 /* GameViewController.swift */,
-				05B7604D2200B2E40014A1B9 /* Main.storyboard */,
 				05B760502200B2E40014A1B9 /* Assets.xcassets */,
+				05B7604D2200B2E40014A1B9 /* Main.storyboard */,
 				05B760522200B2E40014A1B9 /* LaunchScreen.storyboard */,
 				05B760552200B2E40014A1B9 /* Info.plist */,
 			);
