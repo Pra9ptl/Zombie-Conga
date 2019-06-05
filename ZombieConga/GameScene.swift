@@ -51,37 +51,12 @@ class GameScene: SKScene {
     
     //Movement Flag
     var zombieDirection:String = "right"
-    
+    // MATH VARIABLES
+    var xd:CGFloat = 0
+    var yd:CGFloat = 0
     override func update(_ currentTime: TimeInterval) {
-        //this is the same as updatePositions() from android
-        //--------------------------------
-        
-        //p1: Make zombie move
-        //1. Get zombie position
-        print("zombie x: \(self.zombie.position.x)")
-        print("zombie y: \(self.zombie.position.y)")
-        print("------------------------")
-        
-        
-        //3. Detect when he hits the wall
-        if (self.zombieDirection == "right") {
-            zombie.position = CGPoint(x:self.zombie.position.x + 10,y:400)
-        }
-        else if (self.zombieDirection == "left") {
-            zombie.position = CGPoint(x:self.zombie.position.x - 10,y:400)
-        }
-        
-        
-        // R1:  Hit right wall, go left
-        if (self.zombie.position.x >= self.size.width) {
-            print("HIT THE WALL")
-            self.zombieDirection = "left"
-        }
-        // R2:  Hight left wall, go right
-        if (self.zombie.position.x <= 0) {
-            self.zombieDirection = "right"
-        }
-        
+        self.zombie.position.x = self.zombie.position.x + self.xd * 10
+        self.zombie.position.y = self.zombie.position.y + self.yd * 10
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -100,6 +75,15 @@ class GameScene: SKScene {
         print("Mouse X? \(mouseposition.x)")
         print("Mouse y? \(mouseposition.y)")
         
+        //calculate those math variable (d, xd, yd)
+        //(x2 - x1)
+        let a = mouseposition.x - self.zombie.position.x
+        //(y2-y1)
+        let b = mouseposition.y - self.zombie.position.y
+        //d
+        let d = sqrt((a*a) + (b*b))
         
+        self.xd = a/d
+        self.yd = b/d
     }
 }
