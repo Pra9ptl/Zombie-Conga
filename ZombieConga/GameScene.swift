@@ -48,11 +48,31 @@ class GameScene: SKScene {
         
         
         //Move the enemy
-        let m1 = SKAction.move(to: CGPoint(x: self.size.width/2, y: 200), duration: 2)
+        let m1 = SKAction.move(to: CGPoint(x: self.size.width/2, y: 400), duration: 2)
         let m2 = SKAction.move(to: CGPoint(x: 200, y: self.size.height/2), duration: 2)
-        let m3 = SKAction.move(to: CGPoint(x: self.size.width - 200, y: self.size.height/2), duration: 2)
+        let m3 = SKAction.move(to: CGPoint(x: self.size.width - 400, y: self.size.height/2), duration: 2)
         let sequence:SKAction = SKAction.sequence([m1,m2,m1,m3])
-        enemy.run(sequence)
+        enemy.run(SKAction.repeatForever(sequence))
+        
+        
+        
+        //write the code to generate a cat every 3 seconds
+        
+        
+        
+    }
+    
+    func makecat() {
+        //lets add some cats
+        
+        let cat = SKSpriteNode(imageNamed: "cat")
+        
+        let randX = Int(CGFloat(arc4random_uniform(UInt32(self.size.width - 400))))
+        let randY = Int(CGFloat(arc4random_uniform(UInt32(self.size.height - 400))))
+        
+        cat.position = CGPoint(x: randX, y: randY)
+        
+        addChild(cat)
     }
     
     //Movement Flag
@@ -63,6 +83,8 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         self.zombie.position.x = self.zombie.position.x + self.xd * 10
         self.zombie.position.y = self.zombie.position.y + self.yd * 10
+        
+        self.makecat()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
