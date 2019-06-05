@@ -10,6 +10,15 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    //sprites decalaration
+    //1. image node
+    let bgNode = SKSpriteNode(imageNamed: "background1")
+    //add zombie sprite
+    //1. image node
+    let zombie = SKSpriteNode(imageNamed: "zombie1")
+    //add enemy sprite
+    //1. image node
+    let enemy = SKSpriteNode(imageNamed: "enemy")
    
     override func didMove(to view: SKView) {
         //code here
@@ -18,37 +27,40 @@ class GameScene: SKScene {
         self.backgroundColor = SKColor.blue
         
         //set background image of the app
-        //1. image node
-        let bgNode = SKSpriteNode(imageNamed: "background1")
         
         //set position
         bgNode.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         //force the background to back of all the sprites
         bgNode.zPosition = -1
-        //add tp screen
-        addChild(bgNode)
-        
-        
-        //add zombie sprite
-        //1. image node
-        let zombie = SKSpriteNode(imageNamed: "zombie1")
         
         //set position
         zombie.position = CGPoint(x: 400, y: 400)
         
-        //add zombie to the screen
-        addChild(zombie)
-        
-        //add zombie sprite
-        //1. image node
-        let enemy = SKSpriteNode(imageNamed: "enemy")
-        
         //set position
         enemy.position = CGPoint(x: self.size.width - 200, y: self.size.height/2)
         
+        //add tp screen
+        addChild(bgNode)
+        //add zombie to the screen
+        addChild(zombie)
         //add zombie to the screen
         addChild(enemy)
+        
+        
     }
-
-    
+    override func update(_ currentTime: TimeInterval) {
+        //this is the same as updatePositions() from android
+        //--------------------------------
+        
+        //p1: Make zombie move
+        //1. Get zombie position
+        print("zombie x: \(self.zombie.position.x)")
+        print("zombie y: \(self.zombie.position.y)")
+        print("------------------------")
+        
+        //2. Move him 10px to right
+        zombie.position = CGPoint(x: self.zombie.position.x + 100, y: 400)
+        
+        
+    }
 }
