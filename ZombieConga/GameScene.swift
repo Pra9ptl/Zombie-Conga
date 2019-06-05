@@ -48,6 +48,10 @@ class GameScene: SKScene {
         
         
     }
+    
+    //Movement Flag
+    var zombieDirection:String = "right"
+    
     override func update(_ currentTime: TimeInterval) {
         //this is the same as updatePositions() from android
         //--------------------------------
@@ -58,9 +62,25 @@ class GameScene: SKScene {
         print("zombie y: \(self.zombie.position.y)")
         print("------------------------")
         
-        //2. Move him 10px to right
-        zombie.position = CGPoint(x: self.zombie.position.x + 100, y: 400)
         
+        //3. Detect when he hits the wall
+        if (self.zombieDirection == "right") {
+            zombie.position = CGPoint(x:self.zombie.position.x + 10,y:400)
+        }
+        else if (self.zombieDirection == "left") {
+            zombie.position = CGPoint(x:self.zombie.position.x - 10,y:400)
+        }
+        
+        
+        // R1:  Hit right wall, go left
+        if (self.zombie.position.x >= self.size.width) {
+            print("HIT THE WALL")
+            self.zombieDirection = "left"
+        }
+        // R2:  Hight left wall, go right
+        if (self.zombie.position.x <= 0) {
+            self.zombieDirection = "right"
+        }
         
     }
 }
