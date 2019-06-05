@@ -23,7 +23,8 @@ class GameScene: SKScene {
         
         //set position
         bgNode.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-        
+        //force the background to back of all the sprites
+        bgNode.zPosition = -1
         //add tp screen
         addChild(bgNode)
         
@@ -37,6 +38,16 @@ class GameScene: SKScene {
         
         //add zombie to the screen
         addChild(zombie)
+        
+        //add zombie sprite
+        //1. image node
+        let enemy = SKSpriteNode(imageNamed: "enemy")
+        
+        //set position
+        enemy.position = CGPoint(x: self.size.width - 200, y: self.size.height/2)
+        
+        //add zombie to the screen
+        addChild(enemy)
     }
 
     
