@@ -27,6 +27,16 @@ class GameScene: SKScene {
         //add tp screen
         addChild(bgNode)
         
+        
+        //add zombie sprite
+        //1. image node
+        let zombie = SKSpriteNode(imageNamed: "zombie1")
+        
+        //set position
+        zombie.position = CGPoint(x: 400, y: 400)
+        
+        //add zombie to the screen
+        addChild(zombie)
     }
 
     
