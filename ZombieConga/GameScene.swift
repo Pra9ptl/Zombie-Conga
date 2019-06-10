@@ -80,11 +80,29 @@ class GameScene: SKScene {
     // MATH VARIABLES
     var xd:CGFloat = 0
     var yd:CGFloat = 0
+    
+    
+    var timeOfLastUpdate:TimeInterval?
+    
     override func update(_ currentTime: TimeInterval) {
         self.zombie.position.x = self.zombie.position.x + self.xd * 10
         self.zombie.position.y = self.zombie.position.y + self.yd * 10
         
-        self.makecat()
+        print("What is current time \(currentTime)")
+
+        
+        if(timeOfLastUpdate == nil){
+            timeOfLastUpdate = currentTime
+        }
+        
+        let timePassed = (currentTime - timeOfLastUpdate!)
+        if(timePassed >= 3){
+            timeOfLastUpdate = currentTime
+            //make cat
+            self.makecat()
+        }
+        
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
