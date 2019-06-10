@@ -140,6 +140,20 @@ class GameScene: SKScene {
             
             //update lives label
             self.livesLabel.text = "Lives: \(self.lives)"
+            
+            if(self.lives == 0){
+                //Display you lose scene
+                
+                let loseScene = GameOverScene(size: self.size)
+                
+                //Configure the lose
+                loseScene.scaleMode = self.scaleMode
+                
+                //Make animation swapping to the lose scene
+                let transitionEffect = SKTransition.flipHorizontal(withDuration: 1)
+                self.view?.presentScene(loseScene, transition: transitionEffect)
+            }
+            
             // Player restarts in original position
             self.zombie.position = CGPoint(x:100, y:400)
             
