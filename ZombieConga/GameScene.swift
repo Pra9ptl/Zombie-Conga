@@ -12,13 +12,16 @@ import GameplayKit
 class GameScene: SKScene {
     //sprites decalaration
     //1. image node
-    let bgNode = SKSpriteNode(imageNamed: "background1")
+    //let bgNode = SKSpriteNode(imageNamed: "background1")
     //add zombie sprite
     //1. image node
     let zombie = SKSpriteNode(imageNamed: "zombie1")
     //add enemy sprite
     //1. image node
     let enemy = SKSpriteNode(imageNamed: "enemy")
+    
+    let livesLabel = SKLabelNode()
+    let scoreLabel = SKLabelNode()
    
     override func didMove(to view: SKView) {
         //code here
@@ -29,9 +32,9 @@ class GameScene: SKScene {
         //set background image of the app
         
         //set position
-        bgNode.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+       // bgNode.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         //force the background to back of all the sprites
-        bgNode.zPosition = -1
+       // bgNode.zPosition = -1
         
         //set position
         zombie.position = CGPoint(x: 400, y: 400)
@@ -40,11 +43,26 @@ class GameScene: SKScene {
         enemy.position = CGPoint(x: self.size.width - 200, y: self.size.height/2)
         
         //add tp screen
-        addChild(bgNode)
+        //addChild(bgNode)
         //add zombie to the screen
         addChild(zombie)
         //add zombie to the screen
         addChild(enemy)
+        
+        
+        // MARK: Add HUDS to the game
+        // --------------------------
+        
+        self.livesLabel.text = "Lives: \(self.lives)"
+        self.livesLabel.fontColor = UIColor.yellow
+        self.livesLabel.fontSize = 100;
+        self.livesLabel.fontName = "Avenir-Bold"
+        self.livesLabel.position = CGPoint(x: 200, y:self.size.height - 400)
+        self.scoreLabel.text = "Lives: \(self.lives)"
+        self.scoreLabel.fontColor = UIColor.yellow
+        self.scoreLabel.fontSize = 100;
+        self.scoreLabel.fontName = "Avenir-Bold"
+        self.scoreLabel.position = CGPoint(x: self.size.width - 400, y:self.size.height - 400)
         
         
         //Move the enemy
@@ -61,17 +79,20 @@ class GameScene: SKScene {
         
         
     }
+    var cats:[SKSpriteNode] = []
+    let cat = SKSpriteNode(imageNamed: "cat")
     
     func makecat() {
         //lets add some cats
         
-        let cat = SKSpriteNode(imageNamed: "cat")
+        
         
         let randX = Int(CGFloat(arc4random_uniform(UInt32(self.size.width - 150))))
         let randY = Int(CGFloat(arc4random_uniform(UInt32(self.size.height - 150))))
         
         cat.position = CGPoint(x: randX, y: randY)
         
+        cats.append(cat)
         addChild(cat)
     }
     
@@ -84,6 +105,7 @@ class GameScene: SKScene {
     
     //Game Statistic variables
     var lives = 2
+    var score = 0
     
     var timeOfLastUpdate:TimeInterval?
     
@@ -105,24 +127,44 @@ class GameScene: SKScene {
             self.makecat()
         }
         
-        // MARK: Check for collisions
+        // MARK: R1. dectect collisions between zombie and old lady
         // -----------------------------
         
         
-        // R1. dectect collisions between zombie and old lady
-        
-        var collisionsDetected = self.zombie.intersects(self.enemy)
+        let collisionsDetected = self.zombie.intersects(self.enemy)
         if(collisionsDetected){
             print("Collision Detected!")
             
             // Palyer die
             self.lives = self.lives - 1
+            
+            //update lives label
+            self.livesLabel.text = "Lives: \(self.lives)"
             // Player restarts in original position
-            self.zombie.position = CGPoint(x:400, y:400)
+            self.zombie.position = CGPoint(x:100, y:400)
             
             //restart his xd and yd
             self.xd = 0
             self.yd = 0
+            
+            
+            // MARK: R1. dectect collisions between zombie and cat
+            // --------------------------------------
+            for (arrayIndex, cat) in cats.enumerated() {
+                if(self.zombie.intersects(self.cat) == true){
+                    print("Cat Collision Detected!")
+                    
+                    // 1. increase the score
+                    self.score = self.score - 1
+                    //update lives label
+                    self.scoreLabel.text = "Score: \(self.score)"
+                    // 2. remove cat from teh scene
+                    // 2a. Remove from the array
+                    self.cats.remove(at: arrayIndex)
+                    // 2b. Remove from the screen
+                    self.cat.removeFromParent()
+                }
+            }
             
         }
     }
