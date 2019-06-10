@@ -124,7 +124,7 @@ class GameScene: SKScene {
         
         
         let sequence:SKAction = SKAction.sequence([m1, m2, m1, m3])
-        //enemy.run(SKAction.repeatForever(sequence))
+        enemy.run(SKAction.repeatForever(sequence))
         
         
         // write the code to generate a cat every 3 seconds
@@ -240,13 +240,13 @@ class GameScene: SKScene {
                 // ---- 2b. remove from scene (undraw the cat)
                 
                 if (self.score == 5) {
-                    // DISPLAY THE YOU LOSE SCENE
+                    // DISPLAY THE YOU WIN SCENE
                     let winScene = GameOverScene(size: self.size)
                     
-                    // CONFIGURE THE LOSE SCENE
+                    // CONFIGURE THE WIN SCENE
                     winScene.scaleMode = self.scaleMode
                     
-                    // MAKE AN ANIMATION SWAPPING TO THE LOSE SCENE
+                    // MAKE AN ANIMATION SWAPPING TO THE WIN SCENE
                     let transitionEffect = SKTransition.flipHorizontal(withDuration: 2)
                     self.view?.presentScene(winScene, transition: transitionEffect)
                     
@@ -254,6 +254,25 @@ class GameScene: SKScene {
                 cat.removeFromParent()
             }
         }
+            // MARK: R3: Check for collisions between zombie & wall
+            if (self.zombie.position.x <= 50) {
+            // left of screen
+            self.xd = self.xd * -1
+            }
+            else if (self.zombie.position.x >= self.size.width-100) {
+            // right of screen
+                             self.xd = self.xd * -1
+                      }
+               else if (self.zombie.position.y <= 50) {
+                         // botttom of screen
+                              self.yd = self.yd * -1
+                      }
+                else if (self.zombie.position.y >= self.size.height-100)  {
+                     // top of screen
+                          self.yd = self.yd * -1
+                 }
+            
+        
         
         
         //        if (self.zombie.intersects(self.cat) == true) {
