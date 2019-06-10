@@ -67,8 +67,8 @@ class GameScene: SKScene {
         
         let cat = SKSpriteNode(imageNamed: "cat")
         
-        let randX = Int(CGFloat(arc4random_uniform(UInt32(self.size.width - 400))))
-        let randY = Int(CGFloat(arc4random_uniform(UInt32(self.size.height - 400))))
+        let randX = Int(CGFloat(arc4random_uniform(UInt32(self.size.width - 150))))
+        let randY = Int(CGFloat(arc4random_uniform(UInt32(self.size.height - 150))))
         
         cat.position = CGPoint(x: randX, y: randY)
         
@@ -81,6 +81,9 @@ class GameScene: SKScene {
     var xd:CGFloat = 0
     var yd:CGFloat = 0
     
+    
+    //Game Statistic variables
+    var lives = 2
     
     var timeOfLastUpdate:TimeInterval?
     
@@ -102,7 +105,26 @@ class GameScene: SKScene {
             self.makecat()
         }
         
+        // MARK: Check for collisions
+        // -----------------------------
         
+        
+        // R1. dectect collisions between zombie and old lady
+        
+        var collisionsDetected = self.zombie.intersects(self.enemy)
+        if(collisionsDetected){
+            print("Collision Detected!")
+            
+            // Palyer die
+            self.lives = self.lives - 1
+            // Player restarts in original position
+            self.zombie.position = CGPoint(x:400, y:400)
+            
+            //restart his xd and yd
+            self.xd = 0
+            self.yd = 0
+            
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
